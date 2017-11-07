@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>HTML2</title>
+    <script>
+        function getLocation() {
+            //Checks if the geolocation is supported
+            if (navigator.geolocation) {
+                //if getcurrentposition is successful it shows the position
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+        function getMap() {
+            //Checks if the geolocation is supported
+            if (navigator.geolocation) {
+                //if getcurrentposition is successful it shows the position
+                navigator.geolocation.getCurrentPosition(mapFunc, showError);
+            } else {
+                document.getElementById("mapholder").innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+        //the function outputs latitude and longitude
+        function showPosition(position) {
+            document.getElementById("demo").innerHTML = "Latitude: " + position.coords.latitude +
+                "<br>Longitude: " + position.coords.longitude;
+        }
+        //Used to handle error
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    x.innerHTML = "User denied the request for Geolocation."
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    x.innerHTML = "Location information is unavailable."
+                    break;
+                case error.TIMEOUT:
+                    x.innerHTML = "The request to get user location timed out."
+                    break;
+                case error.UNKNOWN_ERROR:
+                    x.innerHTML = "An unknown error occurred."
+                    break;
+            }
+        }
+
+        function mapFunc(position) {
+            var latlon = position.coords.latitude + "," + position.coords.longitude;
+
+            var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=14&size=400x300&sensor=false&key=AIzaSyDmjuSX9M8vbyBtNZ3T_7xi1pTzCkHf3go";
+            document.getElementById("mapholder").innerHTML = "<img src='" + img_url + "'>";
+        }
+
+        function allowDrop(ev) {
+            //prevent the browser default handling of the data 
+            ev.preventDefault();
+        }
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+        function drop(ev) {
+            ev.preventDefault();
+            //will return any data that was set to the same type in the setData() method
+            var data = ev.dataTransfer.getData("text");
+            ev.target.appendChild(document.getElementById(data));
+        }
+
+
+    </script>
+</head>
+
+<body style="margin: 10px auto;max-width: 800px;padding: 20px 12px 10px 20px;font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;">
+    <!-- Simple video example -->
+    <video src="short.mp4" controls="controls" autoplay>
+        <!-- Video with subtitles -->
+        <track kind="subtitles" src="foo.en.vtt" srclang="en" label="English">
+    </video>
+    
+    <audio src="short.mp4" controls="controls">
+        Your browser does not support the
+        <code>audio</code> element.
+    </audio>
+    <h3>Geolocation</h3>
+    <button onclick="getLocation()">Get location</button>
+    <button onclick="getMap()">Show Map</button>
+    
+    <p id="demo"></p>
+    <div id='mapholder'>
+        
+    </div>
+    <h2>Plug-ins</h2>
+    <h3>Using the embed tag</h3>
+    <embed width="400" height="50" src="plagin.swf">
+    
+        <h3>Using the object element</h3>
+    <object width="400" height="50" data="plagin.swf"></object>
+
+    <h3>Html Drag and drop</h3>
+    <div style=' width: 350px;height: 70px;border: 1px solid #aaaaaa;' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <img id="drag1" src="download.jpg" draggable="true" ondragstart="drag(event)" width="336" height="69">
+
+    <h3>Web Workers</h3>
+    <p>Count numbers:<output id="out"></output>
+    </p>
+    <button onclick="start()">Start Worker</button>
+    <button onclick="stop()">Stop Worker</button>
+
+    <h3>web storage</h3>
+    <button onclick="localstorage()">Web storage </button>
+    <p id="localans"></p>
+
+</body>
+<script>
+    var w;
+
+    function start() {
+    if (typeof (Worker) !== "undefined") {
+            if (typeof (w) == "undefined") {
+                w = new Worker("background.js");
+            }
+            w.onmessage = function (event) {
+                document.getElementById("out").innerHTML = event.data;
+            };
+        } else {
+            document.getElementById("out").innerHTML = "Sorry! No Web Worker support.";
+        }
+    }
+        // //to stop a web worker
+        // function stop() {
+        //     w.terminate();
+        //     w = undefined;
+        // }
+function localstorage() {
+    if (typeof (Storage) !== "undefined") {
+        localStorage.lastname = "oscar";
+        document.getElementById("localans").innerHTML = localStorage.lastname;
+    } else {
+        Alert('no storage found');
+    }
+}
+
+</script>
+
+</html>
