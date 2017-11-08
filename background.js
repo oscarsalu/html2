@@ -1,9 +1,18 @@
 var i = 0;
-
-function timedCount() {
-    i = i + 1;
-    postMessage(i);
-    setTimeout("timedCount()", 500);
+function iseven(num) { 
+    return num % 2; 
 }
 
-timedCount();
+function back() {
+    i = i * i + 1;
+
+    if (iseven(i) == 0) {
+        postMessage(i +' is even ');
+    }else{
+        postMessage(i + ' is odd ');
+    }
+    
+    setTimeout("back()", 500);
+}
+
+back();

@@ -4,8 +4,51 @@
 <head>
     <meta charset="utf-8">
     <title>HTML2</title>
-    <script>
-        function getLocation() {
+</head>
+
+<body style="margin: 10px auto;max-width: 800px;padding: 20px 12px 10px 20px;font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;">
+    <!-- Simple video example -->
+    <video src="short.mp4" controls="controls" autoplay>
+        <!-- Video with subtitles -->
+        <track kind="subtitles" src="foo.en.vtt" srclang="en" label="English">
+    </video>
+    
+    <audio src="short.mp4" controls="controls">
+        Your browser does not support the
+        <code>audio</code> element.
+    </audio>
+    <h3>Geolocation</h3>
+    <button onclick="getLocation()">Get location</button>
+    <button onclick="getMap()">Show Map</button>
+    
+    <p id="demo"></p>
+    <div id='mapholder'>
+        
+    </div>
+    <h2>Plug-ins</h2>
+    <h3>Using the embed tag</h3>
+    <embed width="400" height="50" src="plagin.swf">
+    
+        <h3>Using the object element</h3>
+    <object width="400" height="50" data="plagin.swf"></object>
+
+    <h3>Html Drag and drop</h3>
+    <div style=' width: 350px;height: 70px;border: 1px solid #aaaaaa;' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <img id="drag1" src="download.jpg" draggable="true" ondragstart="drag(event)" width="336" height="69">
+
+    <h3>Web Workers</h3>
+    <p>Show even or odd Numbers:<output id="out"></output>
+    </p>
+    <button onclick="start()">Start Worker</button>
+    <button onclick="stop()">Stop Worker</button>
+
+    <h3>web storage</h3>
+    <button onclick="localstorage()">Web storage </button>
+    <p id="localans"></p>
+
+</body>
+<script>
+    function getLocation() {
             //Checks if the geolocation is supported
             if (navigator.geolocation) {
                 //if getcurrentposition is successful it shows the position
@@ -49,7 +92,7 @@
         function mapFunc(position) {
             var latlon = position.coords.latitude + "," + position.coords.longitude;
 
-            var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=14&size=400x300&sensor=false&key=AIzaSyDmjuSX9M8vbyBtNZ3T_7xi1pTzCkHf3go";
+            var img_url = "https://maps.googleapis.com/maps/api/staticmap?center=" + latlon + "&zoom=14&size=400x300&sensor=false&key=AIzaSyDmjuSX9M8vbyBtNZ3T_7xi1pTzCkHf3go";
             document.getElementById("mapholder").innerHTML = "<img src='" + img_url + "'>";
         }
 
@@ -66,55 +109,7 @@
             var data = ev.dataTransfer.getData("text");
             ev.target.appendChild(document.getElementById(data));
         }
-
-
-    </script>
-</head>
-
-<body style="margin: 10px auto;max-width: 800px;padding: 20px 12px 10px 20px;font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;">
-    <!-- Simple video example -->
-    <video src="short.mp4" controls="controls" autoplay>
-        <!-- Video with subtitles -->
-        <track kind="subtitles" src="foo.en.vtt" srclang="en" label="English">
-    </video>
-    
-    <audio src="short.mp4" controls="controls">
-        Your browser does not support the
-        <code>audio</code> element.
-    </audio>
-    <h3>Geolocation</h3>
-    <button onclick="getLocation()">Get location</button>
-    <button onclick="getMap()">Show Map</button>
-    
-    <p id="demo"></p>
-    <div id='mapholder'>
-        
-    </div>
-    <h2>Plug-ins</h2>
-    <h3>Using the embed tag</h3>
-    <embed width="400" height="50" src="plagin.swf">
-    
-        <h3>Using the object element</h3>
-    <object width="400" height="50" data="plagin.swf"></object>
-
-    <h3>Html Drag and drop</h3>
-    <div style=' width: 350px;height: 70px;border: 1px solid #aaaaaa;' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-    <img id="drag1" src="download.jpg" draggable="true" ondragstart="drag(event)" width="336" height="69">
-
-    <h3>Web Workers</h3>
-    <p>Count numbers:<output id="out"></output>
-    </p>
-    <button onclick="start()">Start Worker</button>
-    <button onclick="stop()">Stop Worker</button>
-
-    <h3>web storage</h3>
-    <button onclick="localstorage()">Web storage </button>
-    <p id="localans"></p>
-
-</body>
-<script>
     var w;
-
     function start() {
     if (typeof (Worker) !== "undefined") {
             if (typeof (w) == "undefined") {
@@ -127,11 +122,11 @@
             document.getElementById("out").innerHTML = "Sorry! No Web Worker support.";
         }
     }
-        // //to stop a web worker
-        // function stop() {
-        //     w.terminate();
-        //     w = undefined;
-        // }
+        //to stop a web worker
+        function stop() {
+            w.terminate();
+            w = undefined;
+        }
 function localstorage() {
     if (typeof (Storage) !== "undefined") {
         localStorage.lastname = "oscar";
