@@ -43,6 +43,7 @@
     <button onclick="stop()">Stop Worker</button>
 
     <h3>web storage</h3>
+    <input type="text" id="textboxstorage" placeholder="type anything to display">
     <button onclick="localstorage()">Web storage </button>
     <p id="localans"></p>
 
@@ -129,8 +130,8 @@
         }
 function localstorage() {
     if (typeof (Storage) !== "undefined") {
-        localStorage.lastname = "oscar";
-        document.getElementById("localans").innerHTML = localStorage.lastname;
+        localStorage.name = document.getElementById('textboxstorage').value;
+        document.getElementById("localans").innerHTML = localStorage.name;
     } else {
         Alert('no storage found');
     }
